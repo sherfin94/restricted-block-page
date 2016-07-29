@@ -8,6 +8,7 @@ jasmine.getFixtures().fixturesPath = path + 'spec/javascripts/fixtures';
 describe("box", function() {
   beforeEach(function() {
     loadFixtures('index.html');
+    $('body').css({'height': '500px'});
     $.holdReady(false);
   });
 
@@ -63,6 +64,17 @@ describe("box", function() {
       $(document).trigger(event);
     }
     expect($('.box').position().left).toEqual(0);
+  });
+
+  it('does not go above the upper screen boundary', function() {
+    var documentHeight = $('body').height();
+    var numSteps = (documentHeight/10) + 5;
+    var event = $.Event('keydown');
+    event.keyCode = 38;
+    for(var i = 0; i < numSteps; i++) {
+      $(document).trigger(event);
+    }
+    expect($('.box').position().top).toEqual(0);
   });
 
 });

@@ -3,9 +3,10 @@ jQuery(document).ready(function() {
   var documentWidth = $('body').width();
   var documentHeight = $('body').height();
   var boxWidth = $('.box').width();
+  var boxHeight = $('.box').height();
 
   Number.prototype.clamp = function(min, max) {
-  return Math.min(Math.max(this, min), max);
+    return Math.min(Math.max(this, min), max);
   };
 
   function goRight(posX) {
@@ -19,7 +20,7 @@ jQuery(document).ready(function() {
   }
 
   function goUp(posY) {
-    var newPos = String(posY - 10) + "px";
+    var newPos = String((posY - 10).clamp(0, documentHeight - boxHeight)) + "px";
     $('.box').css({"top": newPos});
   }
 
