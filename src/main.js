@@ -3,9 +3,18 @@ function initBodyDimensionSetters() {
   $(window).resize(function() {
       $('body').height($(window).height());
       $('body').width($(window).width());
+      documentWidth = $('body').width();
+      documentHeight = $('body').height();
+      boxWidth = $('.box').width();
+      boxHeight = $('.box').height();
   });
 
   $(window).trigger('resize');
+  documentWidth = $('body').width();
+  documentHeight = $('body').height();
+  boxWidth = $('.box').width();
+  boxHeight = $('.box').height();
+
 };
 
 function initClamperForNumbers() {

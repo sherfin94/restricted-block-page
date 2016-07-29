@@ -9,12 +9,10 @@ describe("body", function() {
   beforeEach(function() {
     loadFixtures('index.html');
     $('body').css({'height': '500px'});
-
     $.holdReady(false);
   });
 
   it("should have its dimensions set to that of the window's upon resize", function() {
-    $('body').height(3);
 
     $(window).trigger('resize');
     expect($('body').height()).toEqual($(window).height());
@@ -28,6 +26,7 @@ describe("box", function() {
   beforeEach(function() {
     loadFixtures('index.html');
     $('body').css({'height': '500px'});
+
 
     $.holdReady(false);
   });
