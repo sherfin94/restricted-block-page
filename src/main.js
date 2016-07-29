@@ -8,6 +8,7 @@ jQuery(document).ready(function() {
 
   $(window).resize(function() {
       $('body').height($(window).height());
+      $('body').width($(window).width());
   });
 
   $(window).trigger('resize');

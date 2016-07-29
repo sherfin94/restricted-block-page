@@ -12,7 +12,6 @@ describe("box", function() {
   beforeEach(function() {
     loadFixtures('index.html');
     $('body').css({'height': '500px'});
-    config.stepSize = 10;
 
     $.holdReady(false);
   });
