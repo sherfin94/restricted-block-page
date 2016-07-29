@@ -54,4 +54,15 @@ describe("box", function() {
     expect($('.box').position().left).toEqual(documentWidth - ($('.box').width()));
   });
 
+  it("does not go beyond the left boundary", function() {
+    var documentWidth = $('body').width();
+    var numSteps = (documentWidth/10) + 5;
+    var event = $.Event('keydown');
+    event.keyCode = 37;
+    for(var i = 0; i < numSteps; i++) {
+      $(document).trigger(event);
+    }
+    expect($('.box').position().left).toEqual(0);
+  });
+
 });

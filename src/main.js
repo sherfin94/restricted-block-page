@@ -24,7 +24,7 @@ jQuery(document).ready(function() {
   }
 
   function goLeft(posX) {
-    var newPos = String(posX - 10) + "px";
+    var newPos = String((posX - 10).clamp(0, documentWidth - boxWidth)) + "px";
     $('.box').css({"left": newPos});
   }
 
