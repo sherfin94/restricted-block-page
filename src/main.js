@@ -1,4 +1,17 @@
+
+
+var config = {
+  stepSize : 10
+}
+
 jQuery(document).ready(function() {
+
+  $(window).resize(function() {
+      $('body').height($(window).height());
+  });
+
+  $(window).trigger('resize');
+  var stepSize = config.stepSize;
 
   var documentWidth = $('body').width();
   var documentHeight = $('body').height();
@@ -10,22 +23,22 @@ jQuery(document).ready(function() {
   };
 
   function goRight(posX) {
-    var newPos = String((posX + 10).clamp(0, documentWidth - boxWidth)) + "px";
+    var newPos = String((posX + stepSize).clamp(0, documentWidth - boxWidth)) + "px";
     $('.box').css({"left": newPos});
   }
 
   function goDown(posY) {
-    var newPos = String(posY + 10) + "px";
+    var newPos = String((posY + stepSize).clamp(0, documentHeight - boxHeight)) + "px";
     $('.box').css({"top": newPos});
   }
 
   function goUp(posY) {
-    var newPos = String((posY - 10).clamp(0, documentHeight - boxHeight)) + "px";
+    var newPos = String((posY  - stepSize).clamp(0, documentHeight - boxHeight)) + "px";
     $('.box').css({"top": newPos});
   }
 
   function goLeft(posX) {
-    var newPos = String((posX - 10).clamp(0, documentWidth - boxWidth)) + "px";
+    var newPos = String((posX  - stepSize).clamp(0, documentWidth - boxWidth)) + "px";
     $('.box').css({"left": newPos});
   }
 

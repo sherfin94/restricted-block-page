@@ -5,19 +5,25 @@ path += 'base/';
 }
 jasmine.getFixtures().fixturesPath = path + 'spec/javascripts/fixtures';
 
+
+
 describe("box", function() {
+
   beforeEach(function() {
     loadFixtures('index.html');
     $('body').css({'height': '500px'});
+    config.stepSize = 10;
+
     $.holdReady(false);
   });
 
   it("moves right when right arow is pressed", function() {
+
     var positionX = $('.box').position().left;
     var event = $.Event('keydown');
     event.keyCode = 39;
     $(document).trigger(event);
-    expect($('.box').position().left).toEqual(positionX + 10);
+    expect($('.box').position().left).toEqual(positionX + config.stepSize);
   });
 
   it("moves left when left arow is pressed", function() {
@@ -25,7 +31,7 @@ describe("box", function() {
     var event = $.Event('keydown');
     event.keyCode = 37;
     $(document).trigger(event);
-    expect($('.box').position().left).toEqual(positionX - 10);
+    expect($('.box').position().left).toEqual(positionX - config.stepSize);
   });
 
   it("moves down when down arow is pressed", function() {
@@ -33,7 +39,7 @@ describe("box", function() {
     var event = $.Event('keydown');
     event.keyCode = 40;
     $(document).trigger(event);
-    expect($('.box').position().top).toEqual(positionY + 10);
+    expect($('.box').position().top).toEqual(positionY + config.stepSize);
   });
 
   it("moves up when up arow is pressed", function() {
@@ -41,12 +47,12 @@ describe("box", function() {
     var event = $.Event('keydown');
     event.keyCode = 38;
     $(document).trigger(event);
-    expect($('.box').position().top).toEqual(positionY - 10);
+    expect($('.box').position().top).toEqual(positionY - config.stepSize);
   });
 
   it("does not go after right boundary", function() {
     var documentWidth = $('body').width();
-    var numSteps = (documentWidth/10) + 5;
+    var numSteps = (documentWidth/config.stepSize) + 5;
     var event = $.Event('keydown');
     event.keyCode = 39;
     for(var i = 0; i < numSteps; i++) {
@@ -57,7 +63,7 @@ describe("box", function() {
 
   it("does not go beyond the left boundary", function() {
     var documentWidth = $('body').width();
-    var numSteps = (documentWidth/10) + 5;
+    var numSteps = (documentWidth/config.stepSize) + 5;
     var event = $.Event('keydown');
     event.keyCode = 37;
     for(var i = 0; i < numSteps; i++) {
@@ -68,13 +74,25 @@ describe("box", function() {
 
   it('does not go above the upper screen boundary', function() {
     var documentHeight = $('body').height();
-    var numSteps = (documentHeight/10) + 5;
+    var numSteps = (documentHeight/config.stepSize) + 5;
     var event = $.Event('keydown');
     event.keyCode = 38;
     for(var i = 0; i < numSteps; i++) {
       $(document).trigger(event);
     }
     expect($('.box').position().top).toEqual(0);
+  });
+
+  it('does not go below the lower screen boundary', function() {
+    var documentHeight = $('body').height();
+    var numSteps = (documentHeight/config.stepSize) + 5;
+    var event = $.Event('keydown');
+    event.keyCode = 40;
+    for(var i = 0; i < numSteps; i++) {
+      $(document).trigger(event);
+    }
+
+    expect($('.box').position().top).toEqual(documentHeight - $('.box').height());
   });
 
 });
