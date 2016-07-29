@@ -5,6 +5,22 @@ path += 'base/';
 }
 jasmine.getFixtures().fixturesPath = path + 'spec/javascripts/fixtures';
 
+describe("body", function() {
+  beforeEach(function() {
+    loadFixtures('index.html');
+    $('body').css({'height': '500px'});
+
+    $.holdReady(false);
+  });
+
+  it("should have its dimensions set to that of the window's upon resize", function() {
+    $('body').height(3);
+
+    $(window).trigger('resize');
+    expect($('body').height()).toEqual($(window).height());
+    expect($('body').width()).toEqual($(window).width());
+  });
+})
 
 
 describe("box", function() {
@@ -90,7 +106,6 @@ describe("box", function() {
     for(var i = 0; i < numSteps; i++) {
       $(document).trigger(event);
     }
-
     expect($('.box').position().top).toEqual(documentHeight - $('.box').height());
   });
 

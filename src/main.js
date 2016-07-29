@@ -1,65 +1,50 @@
 
-
-var config = {
-  stepSize : 10
-}
-
-jQuery(document).ready(function() {
-
+function initBodyDimensionSetters() {
   $(window).resize(function() {
       $('body').height($(window).height());
       $('body').width($(window).width());
   });
 
   $(window).trigger('resize');
-  var stepSize = config.stepSize;
+};
 
-  var documentWidth = $('body').width();
-  var documentHeight = $('body').height();
-  var boxWidth = $('.box').width();
-  var boxHeight = $('.box').height();
-
+function initClamperForNumbers() {
   Number.prototype.clamp = function(min, max) {
     return Math.min(Math.max(this, min), max);
   };
+}
 
-  function goRight(posX) {
-    var newPos = String((posX + stepSize).clamp(0, documentWidth - boxWidth)) + "px";
-    $('.box').css({"left": newPos});
-  }
+var documentWidth = $('body').width();
+var documentHeight = $('body').height();
+var boxWidth = $('.box').width();
+var boxHeight = $('.box').height();
 
-  function goDown(posY) {
-    var newPos = String((posY + stepSize).clamp(0, documentHeight - boxHeight)) + "px";
-    $('.box').css({"top": newPos});
-  }
+var keyCodeDirections = {
+  39: 'right',
+  40: 'down',
+  38: 'up',
+  37: 'left'
+};
 
-  function goUp(posY) {
-    var newPos = String((posY  - stepSize).clamp(0, documentHeight - boxHeight)) + "px";
-    $('.box').css({"top": newPos});
-  }
+var config = {
+  stepSize : 10
+};
 
-  function goLeft(posX) {
-    var newPos = String((posX  - stepSize).clamp(0, documentWidth - boxWidth)) + "px";
-    $('.box').css({"left": newPos});
-  }
+jQuery(document).ready(function() {
+
+  initBodyDimensionSetters();
+  initClamperForNumbers();
+
+  documentWidth = $('body').width();
+  documentHeight = $('body').height();
+  boxWidth = $('.box').width();
+  boxHeight = $('.box').height();
 
   $(document).on('keydown', function(event) {
     var currentPosition = $('.box').position();
-    switch (event.keyCode) {
-      case 39:
-        goRight(currentPosition.left);
-        break;
-      case 40:
-        goDown(currentPosition.top);
-        break;
-        case 38:
-        goUp(currentPosition.top);
-        break;
-        case 37:
-        goLeft(currentPosition.left);
-        break;
-      default:
-
+    var stepSize = config.stepSize;
+    if([37, 38, 39, 40].indexOf(event.keyCode) != -1) {
+      moveBox(currentPosition, config.stepSize, keyCodeDirections[event.keyCode]);
     }
   });
 });
